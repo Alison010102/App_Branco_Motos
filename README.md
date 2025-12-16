@@ -68,4 +68,6 @@ Espelhos, guidões, carenagens, protetores
 
 ## 6.Consumíveis/Rápidos (opcional)
 
+
 Parafusos, porcas, arruelas, abraçadeiras, panos, sprays de limpeza
+ajusrado umas coisas
