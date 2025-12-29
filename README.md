@@ -68,6 +68,67 @@ Espelhos, guidões, carenagens, protetores
 
 ## 6.Consumíveis/Rápidos (opcional)
 
-
 Parafusos, porcas, arruelas, abraçadeiras, panos, sprays de limpeza
-ajusrado umas coisas
+
+## Regras de Segurança do Firebase Storage
+
+Para que o upload de imagens funcione corretamente durante o desenvolvimento, configure as regras do Storage no console do Firebase da seguinte maneira:
+
+### Opção 1: Modo de Desenvolvimento (Somente para testes)
+Permite que qualquer pessoa faça upload e leitura (útil se você ainda não implementou o login no app):
+
+```
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read, write: if true;
+    }
+  }
+}
+```
+
+### Opção 2: Modo Seguro (Produção)
+Exige que o usuário esteja autenticado no App para fazer upload:
+
+```
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
+```
+**Importante:** Se usar o Modo Seguro, certifique-se de que o usuário fez login (mesmo que anônimo) antes de tentar enviar a imagem.
+
+## Regras de Segurança do Firestore (Banco de Dados)
+
+Se você receber o erro `Missing or insufficient permissions` ao buscar ou salvar produtos, configure as regras do **Firestore Database** assim:
+
+### Opção 1: Modo de Desenvolvimento (Somente para testes)
+Permite leitura e escrita para todos:
+
+```
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}
+```
+
+### Opção 2: Modo Seguro
+Exige autenticação:
+
+```
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
+```
