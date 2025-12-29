@@ -1,134 +1,52 @@
-### Checklist do App de Controle de Estoque de Oficina de Moto
+# 🏍️ Branco Motos - Gerenciamento de Estoque
 
-## Funcionalidades
+Um aplicativo móvel robusto desenvolvido para o gerenciamento eficiente de estoque de peças e acessórios para motocicletas. O aplicativo permite o cadastro de produtos via leitura de código de barras, controle de quantidades e organização por categorias.
 
-[] Cadastro de itens
+## 🚀 Tecnologias Utilizadas
 
-[] Nome do item
+O projeto foi construído utilizando as tecnologias mais modernas do ecossistema mobile:
 
-[] Quantidade
+*   **[React Native](https://reactnative.dev/)** - Framework principal para o desenvolvimento.
+*   **[Expo (SDK 52)](https://expo.dev/)** - Plataforma para agilizar o desenvolvimento e builds nativos.
+*   **[TypeScript](https://www.typescriptlang.org/)** - Linguagem para garantir tipagem estática e maior segurança no código.
+*   **[React Navigation v7](https://reactnavigation.org/)** - Gerenciamento de rotas e navegação fluida entre telas.
+*   **[Firebase](https://firebase.google.com/)** - Infraestrutura de Backend-as-a-Service (Analytics, Database e Storage).
+*   **[Async Storage](https://react-native-async-storage.github.io/async-storage/)** - Persistência de dados local para funcionamento offline.
+*   **[EAS (Expo Application Services)](https://expo.dev/eas)** - Utilizado para a geração do build Android (`.apk`).
 
-[] Descrição
+## ✨ Funcionalidades
 
-[] Código de barras
+*   🔍 **Busca Inteligente**: Pesquisa de produtos por nome ou código de barras.
+*   📸 **Scanner de Código de Barras**: Cadastro rápido utilizando a câmera do dispositivo através do `expo-camera`.
+*   📦 **Controle de Estoque**: Gerenciamento detalhado de quantidades com indicadores visuais de itens esgotados.
+*   🏷️ **Organização por Categorias**: Segmentação de itens (Óleos, Freios, Baterias, Filtros, Acessórios).
+*   🖼️ **Galeria de Imagens**: Suporte para fotos dos produtos via `expo-image-picker`.
+*   🎨 **Design Moderno**: Interface intuitiva e responsiva adaptada para Android.
 
-[] Controle de estoque
+## 🛠️ Ferramentas e Configuração
 
-[] Adicionar quantidade de um item
+*   **EAS Build**: Configurado com perfis de `preview` e `production` para distribuição facilitada.
+*   **Expo Fingerprint**: Garantia de consistência no ambiente nativo.
+*   **Firebase Integration**: Configurado para análise de dados e suporte a armazenamento em nuvem.
 
-[] Remover quantidade de um item
+## 📦 Como rodar o projeto
 
-[] Cadastrar automaticamente se não existir
+1.  **Clone o repositório:**
+    ```bash
+    git clone https://github.com/seu-usuario/App_Branco_Motos.git
+    ```
+2.  **Instale as dependências:**
+    ```bash
+    npm install
+    ```
+3.  **Inicie o ambiente Expo:**
+    ```bash
+    npx expo start
+    ```
+4.  **Para gerar um novo build:**
+    ```bash
+    eas build -p android --profile preview
+    ```
 
-## Pesquisa
-
-[] Barra de pesquisa por nome
-
-[] Barra de pesquisa por código de barras
-
-[] Código de barras e imagens
-
-[] Escanear código de barras com a câmera
-
-[] Verificar se o item já existe
-
-[] Buscar automaticamente imagem do item na internet
-
-## Tecnologias
-
- []React Native + Expo
-
-[] Banco de dados local (SQLite ou AsyncStorage)
-
-[] Scanner de código de barras (expo-barcode-scanner)
-
-[] Busca de imagens via API externa (Unsplash, Bing Image Search, etc.)
-
-## categorias itens 
-
-## 1.Óleo e lubrificante
-
-Óleo do motor, transmissão, graxa, spray lubrificante
-
-## 2.Bateria e elétrica
-
-Baterias, lâmpadas, fusíveis, cabos e conectores
-
-## 3.Freios e suspensão
-
-Pastilhas, discos de freio, óleo de freio, amortecedores
-
-## 4.Filtros e peças mecânicas
-
-Filtros de óleo, ar e combustível, velas, correias, correntes, rolamentos
-
-## 5.Acessórios
-
-Espelhos, guidões, carenagens, protetores
-
-## 6.Consumíveis/Rápidos (opcional)
-
-Parafusos, porcas, arruelas, abraçadeiras, panos, sprays de limpeza
-
-## Regras de Segurança do Firebase Storage
-
-Para que o upload de imagens funcione corretamente durante o desenvolvimento, configure as regras do Storage no console do Firebase da seguinte maneira:
-
-### Opção 1: Modo de Desenvolvimento (Somente para testes)
-Permite que qualquer pessoa faça upload e leitura (útil se você ainda não implementou o login no app):
-
-```
-service firebase.storage {
-  match /b/{bucket}/o {
-    match /{allPaths=**} {
-      allow read, write: if true;
-    }
-  }
-}
-```
-
-### Opção 2: Modo Seguro (Produção)
-Exige que o usuário esteja autenticado no App para fazer upload:
-
-```
-service firebase.storage {
-  match /b/{bucket}/o {
-    match /{allPaths=**} {
-      allow read, write: if request.auth != null;
-    }
-  }
-}
-```
-**Importante:** Se usar o Modo Seguro, certifique-se de que o usuário fez login (mesmo que anônimo) antes de tentar enviar a imagem.
-
-## Regras de Segurança do Firestore (Banco de Dados)
-
-Se você receber o erro `Missing or insufficient permissions` ao buscar ou salvar produtos, configure as regras do **Firestore Database** assim:
-
-### Opção 1: Modo de Desenvolvimento (Somente para testes)
-Permite leitura e escrita para todos:
-
-```
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if true;
-    }
-  }
-}
-```
-
-### Opção 2: Modo Seguro
-Exige autenticação:
-
-```
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if request.auth != null;
-    }
-  }
-}
-```
+---
+Desenvolvido por **Alyson Alves** 🚀
