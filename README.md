@@ -49,4 +49,5 @@ O projeto foi construído utilizando as tecnologias mais modernas do ecossistema
     ```
 
 ---
-Desenvolvido por **Alyson Alves** 🚀
+
+Desenvolvido por **Alison Alves** 🚀
