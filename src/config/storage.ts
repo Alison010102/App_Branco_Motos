@@ -8,6 +8,8 @@ export interface Product {
     category: string;
     barcode: string;
     quantity: number;
+    price: number;
+    brand: string;
     imageUrl?: string;
     createdAt: number;
 }
@@ -78,5 +80,10 @@ export const storage = {
             p.name.toLowerCase().includes(lowerQuery) ||
             p.barcode.includes(query)
         );
+    },
+    async getBrands(): Promise<string[]> {
+        const products = await this.getProducts();
+        const brands = products.map(p => p.brand).filter(b => b && b.trim() !== "");
+        return Array.from(new Set(brands)).sort();
     }
 };

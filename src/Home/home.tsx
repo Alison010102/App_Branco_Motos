@@ -3,6 +3,7 @@ import { View, Text, Image, ScrollView, TextInput, TouchableOpacity, ActivityInd
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { styles } from "./styles";
+import { StatusBar } from "expo-status-bar";
 import Card from "../screens/Cards/Cards";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { storage, Product } from "../config/storage";
@@ -77,84 +78,87 @@ export default function Home() {
 
     return (
         <View style={styles.container}>
+            <StatusBar style="light" backgroundColor="#2B2D42" translucent={true} />
             <SafeAreaView edges={['top']} style={styles.topBar}>
                 <Image
                     source={require("../../assets/branco1.png")}
                     style={styles.topImage}
                     resizeMode="contain"
                 />
+
+                <View style={styles.searchContainer}>
+                    <Ionicons name="search" size={20} color="#8D99AE" />
+                    <TextInput
+                        style={styles.searchBar}
+                        placeholder="Nome ou código de barras..."
+                        value={search}
+                        onChangeText={handleSearch}
+                        placeholderTextColor="#8D99AE"
+                    />
+                    {search.length > 0 && (
+                        <TouchableOpacity onPress={() => handleSearch("")}>
+                            <Ionicons name="close-circle" size={20} color="#8D99AE" />
+                        </TouchableOpacity>
+                    )}
+                </View>
             </SafeAreaView>
 
-            <View style={styles.searchContainer}>
-                <Ionicons name="search" size={20} color="#8D99AE" />
-                <TextInput
-                    style={styles.searchBar}
-                    placeholder="Nome ou código de barras..."
-                    value={search}
-                    onChangeText={handleSearch}
-                    placeholderTextColor="#8D99AE"
-                />
-                {search.length > 0 && (
-                    <TouchableOpacity onPress={() => handleSearch("")}>
-                        <Ionicons name="close-circle" size={20} color="#8D99AE" />
-                    </TouchableOpacity>
+            <View style={styles.contentArea}>
+                {search.length > 0 ? (
+                    loading ? (
+                        <ActivityIndicator size="large" color="#D90429" style={{ marginTop: 20 }} />
+                    ) : (
+                        <FlatList
+                            data={searchResults}
+                            keyExtractor={(item) => item.id}
+                            renderItem={renderSearchResult}
+                            contentContainerStyle={{ paddingBottom: 100, paddingTop: 20 }}
+                            ListEmptyComponent={
+                                <View style={{ alignItems: 'center', marginTop: 40 }}>
+                                    <Ionicons name="search-outline" size={50} color="#8D99AE" />
+                                    <Text style={{ color: '#8D99AE', marginTop: 10 }}>Nenhum produto encontrado</Text>
+                                </View>
+                            }
+                        />
+                    )
+                ) : (
+                    <ScrollView contentContainerStyle={[styles.cardsContainer, { paddingBottom: 100 }]} showsVerticalScrollIndicator={false}>
+                        <Text style={styles.title}>Categorias</Text>
+
+                        <View style={styles.cardsRow}>
+                            <Card
+                                title="Filtro"
+                                image={require("../../assets/filtro.png")}
+                                navigateTo="Filter"
+                            />
+                            <Card
+                                title="Kit tração"
+                                image={require("../../assets/wheel.png")}
+                                navigateTo="Kit tração"
+                            />
+                        </View>
+                        <View style={styles.cardsRow}>
+                            <Card
+                                title="Kit embreagem"
+                                image={require("../../assets/clutch-disc.png")}
+                                navigateTo="Kit embreagem"
+                            />
+                            <Card
+                                title="Rolamento"
+                                image={require("../../assets/ball-bearing.png")}
+                                navigateTo="Rolamento"
+                            />
+                        </View>
+                        <View style={styles.cardsRow}>
+                            <Card
+                                title="Cabos"
+                                image={require("../../assets/wire.png")}
+                                navigateTo="CablesSub"
+                            />
+                        </View>
+                    </ScrollView>
                 )}
             </View>
-
-            {search.length > 0 ? (
-                loading ? (
-                    <ActivityIndicator size="large" color="#D90429" style={{ marginTop: 20 }} />
-                ) : (
-                    <FlatList
-                        data={searchResults}
-                        keyExtractor={(item) => item.id}
-                        renderItem={renderSearchResult}
-                        contentContainerStyle={{ paddingBottom: 100 }}
-                        ListEmptyComponent={
-                            <View style={{ alignItems: 'center', marginTop: 40 }}>
-                                <Ionicons name="search-outline" size={50} color="#8D99AE" />
-                                <Text style={{ color: '#8D99AE', marginTop: 10 }}>Nenhum produto encontrado</Text>
-                            </View>
-                        }
-                    />
-                )
-            ) : (
-                <ScrollView contentContainerStyle={[styles.cardsContainer, { paddingBottom: 100 }]} showsVerticalScrollIndicator={false}>
-                    <Text style={styles.title}>Categorias</Text>
-
-                    <View style={styles.cardsRow}>
-                        <Card
-                            title="Óleos e lubrificantes"
-                            image={require("../../assets/oleo.gif")}
-                            navigateTo="Oleo"
-                        />
-                        <Card
-                            title="Freios e suspensão"
-                            image={require("../../assets/disc-brake.gif")}
-                            navigateTo="Freios"
-                        />
-                    </View>
-                    <View style={styles.cardsRow}>
-                        <Card
-                            title="Bateria e elétrica"
-                            image={require("../../assets/renewable-energy.gif")}
-                            navigateTo="Bateria"
-                        />
-                        <Card
-                            title="Filtros e peças mecânicas"
-                            image={require("../../assets/toolbox.gif")}
-                            navigateTo="Filtros"
-                        />
-                    </View>
-                    <View style={styles.cardsRow}>
-                        <Card
-                            title="Acessórios"
-                            image={require("../../assets/helmet.gif")}
-                            navigateTo="Acessorios"
-                        />
-                    </View>
-                </ScrollView>
-            )}
 
             <TouchableOpacity
                 style={[styles.addButton, { position: 'absolute', bottom: 30, left: 20, right: 20 }]}

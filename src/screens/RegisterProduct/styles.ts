@@ -4,14 +4,37 @@ const { width } = Dimensions.get("window");
 
 export const styles = StyleSheet.create({
     container: {
+        flex: 1,
+        backgroundColor: "#2B2D42",
+    },
+    header: {
+        backgroundColor: "#2B2D42",
+        paddingHorizontal: 20,
+        paddingBottom: 15,
+        paddingTop: 10,
+    },
+    headerContent: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+    },
+    headerTitle: {
+        color: "#FFF",
+        fontSize: 18,
+        fontWeight: "bold",
+    },
+    backButton: {
+        padding: 4,
+    },
+    scrollContent: {
         flexGrow: 1,
         backgroundColor: "#EDF2F4",
         padding: 20,
     },
     title: {
-        fontSize: 28,
+        fontSize: 24,
         fontWeight: "bold",
-        marginBottom: 30,
+        marginBottom: 20,
         color: "#2B2D42",
         textAlign: "left",
     },
@@ -88,9 +111,12 @@ export const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         color: '#2B2D42',
-        marginHorizontal: 20,
-        minWidth: 30,
+        marginHorizontal: 10,
+        minWidth: 50,
         textAlign: 'center',
+        backgroundColor: '#EDF2F4',
+        borderRadius: 8,
+        paddingVertical: 5,
     },
     imageButton: {
         backgroundColor: "#FFF",

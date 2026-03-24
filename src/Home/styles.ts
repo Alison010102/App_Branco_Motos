@@ -3,16 +3,25 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: "#2B2D42",
+    },
+    contentArea: {
+        flex: 1,
         backgroundColor: "#EDF2F4",
+        borderTopLeftRadius: 35,
+        borderTopRightRadius: 35,
+        marginTop: -35,
+        paddingTop: 10,
     },
     topBar: {
         width: "100%",
-        backgroundColor: "#8D99AE",
+        backgroundColor: "#2B2D42",
         justifyContent: "center",
         alignItems: "center",
-        paddingVertical: 20,
-        borderBottomLeftRadius: 30,
-        borderBottomRightRadius: 30,
+        paddingBottom: 60, // Increased to account for contentArea overlap
+        paddingTop: 10,
+        borderBottomLeftRadius: 0, // Removed since contentArea overlaps
+        borderBottomRightRadius: 0,
         shadowColor: "#000",
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.2,
@@ -27,8 +36,8 @@ export const styles = StyleSheet.create({
     searchContainer: {
         flexDirection: "row",
         alignItems: "center",
-        marginHorizontal: 20,
-        marginTop: -25,
+        width: '90%',
+        marginTop: 15,
         backgroundColor: "#FFF",
         borderRadius: 15,
         paddingHorizontal: 15,

@@ -15,7 +15,13 @@ export default function Card({ title, image, navigateTo }: CardProps) {
     return (
         <TouchableOpacity
             style={styles.card}
-            onPress={() => (navigation as any).navigate('ProductList', { category: title })}
+            onPress={() => {
+                if (navigateTo === 'CablesSub') {
+                    (navigation as any).navigate('CablesSub');
+                } else {
+                    (navigation as any).navigate('ProductList', { category: title });
+                }
+            }}
         >
             <Image source={image} style={styles.image} resizeMode="contain" />
             <Text style={styles.title}>{title}</Text>
